@@ -7,6 +7,11 @@ Normalize and fingerprint SQL queries in Python — typically **16–20× faster
 ![Python](https://img.shields.io/pypi/pyversions/sqlfp)
 ![License](https://img.shields.io/pypi/l/sqlfp)
 
+``` bash
+pip install sqlfp
+```
+
+
 **SQLFP** is a fast Python library that normalizes SQL queries and
 generates stable fingerprints.
 

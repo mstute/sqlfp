@@ -36,6 +36,7 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/mstute/sqlfp"
 Repository = "https://github.com/mstute/sqlfp"
+Issues = "https://github.com/mstute/sqlfp/issues"
 
 [tool.maturin]
 include = ["py.typed"]
