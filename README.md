@@ -2,6 +2,7 @@
 
 Normalize and fingerprint SQL queries in Python — typically **16–20× faster than sqlglot** on realistic workloads.
 
+![CI](https://github.com/mstute/sqlfp/actions/workflows/ci.yml/badge.svg)
 ![PyPI](https://img.shields.io/pypi/v/sqlfp)
 ![Python](https://img.shields.io/pypi/pyversions/sqlfp)
 ![License](https://img.shields.io/pypi/l/sqlfp)
