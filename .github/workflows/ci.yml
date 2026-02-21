@@ -24,8 +24,11 @@ jobs:
           pip install "maturin>=1.5,<2" "pytest>=9,<10"
           pip install -r requirements-dev.txt
 
-      - name: Build extension
-        run: maturin develop --release
+      - name: Build wheel
+        run: maturin build --release
+
+      - name: Install wheel
+        run: pip install target/wheels/*.whl
 
       - name: Run tests
         run: pytest -q
