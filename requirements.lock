@@ -1,0 +1,11 @@
+# build
+maturin==1.12.2
+
+# tests
+pytest==9.0.2
+
+# coding style
+black==26.1.0
+
+# to compare
+sqlglot==28.10.1

@@ -1,0 +1,46 @@
+[package]
+name = "sqlfp"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.93"
+authors = ["Mathieu Stute <mstute@users.noreply.github.com>"]
+license = "MIT"
+description = "Fast SQL normalization and fingerprinting engine with Python bindings"
+keywords = ["sql", "hashing", "fingerprint", "python", "pyo3"]
+readme = "README.md"
+homepage = "https://github.com/mstute/sqlfp"
+repository = "https://github.com/mstute/sqlfp"
+categories = [
+    "database",
+    "parser-implementations",
+    "api-bindings"
+]
+include = [
+    "src/**",
+    "Cargo.toml",
+    "README.md",
+    "LICENSE"
+]
+
+[lib]
+name = "sqlfp"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.22", features = ["extension-module", "abi3-py38"] }
+sqlparser = { version = "0.61", features = ["visitor"] }
+sha2 = "0.10"
+hex = "0.4"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
+
+
+[target.'cfg(target_os = "macos")']
+rustflags = [
+  "-C", "link-arg=-undefined",
+  "-C", "link-arg=dynamic_lookup",
+]

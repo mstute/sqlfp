@@ -1,0 +1,41 @@
+[build-system]
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "sqlfp"
+version = "0.1.0"
+description = "Fast SQL normalization and fingerprinting engine with Python bindings"
+readme = "README.md"
+requires-python = ">=3.9"
+
+authors = [
+  {name = "Mathieu Stute", email = "mstute@users.noreply.github.com"},
+]
+
+license = { text = "MIT" }
+license-files = ["LICENSE"]
+
+keywords = ["sql", "fingerprint", "hashing", "performance", "pyo3"]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Database",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Homepage = "https://github.com/mstute/sqlfp"
+Repository = "https://github.com/mstute/sqlfp"
+
+[tool.maturin]
+include = ["py.typed"]

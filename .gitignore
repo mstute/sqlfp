@@ -1,0 +1,40 @@
+# Rust
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+dist/
+build/
+*.egg-info/
+.pytest_cache
+
+# Virtualenv
+.venv
+venv
+env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Env
+.env
+
+TODOs.md
+
+.claude*

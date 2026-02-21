@@ -1,0 +1,11 @@
+# build
+maturin>=1.12,<2
+
+# tests
+pytest>=9,<10
+
+# formatting
+black>=26,<27
+
+# comparison tests
+sqlglot>=28,<29
