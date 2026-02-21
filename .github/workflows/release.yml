@@ -41,6 +41,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: dist
+          merge-multiple: true
 
       - name: Publish to PyPI
         if: github.event_name == 'release'
