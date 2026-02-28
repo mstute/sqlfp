@@ -25,7 +25,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install "maturin>=1.5,<2" "pytest>=9,<10"
+          pip install "maturin>=1.5,<2" "pytest>=8,<10"
           pip install -r requirements-dev.txt
 
       - name: Build wheel
