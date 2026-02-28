@@ -41,5 +41,8 @@ Issues = "https://github.com/mstute/sqlfp/issues"
 [tool.maturin]
 include = ["py.typed", "sqlfp.pyi"]
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
 [tool.mypy]
 strict = true
