@@ -1997,3 +1997,10 @@ def test_sqlfp_idempotent():
     second = sqlfp.normalize(first.normalized)
     assert first.hash == second.hash
     assert first.normalized == second.normalized
+
+
+def test_sqlfp_multi_statement():
+    # Only the first statement is normalized; the second is silently ignored
+    result = sqlfp.normalize("SELECT 1; SELECT 2")
+    assert result.normalized == "SELECT ?"
+    assert result.params == ["1"]
