@@ -32,3 +32,6 @@ jobs:
 
       - name: Run tests
         run: pytest -q
+
+      - name: Type check
+        run: mypy --config-file pyproject.toml sqlfp.pyi

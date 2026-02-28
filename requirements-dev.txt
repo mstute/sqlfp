@@ -9,3 +9,6 @@ black>=26,<27
 
 # comparison tests
 sqlglot>=28,<29
+
+# typing
+mypy>=1.19,<2.0

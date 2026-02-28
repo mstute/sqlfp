@@ -40,3 +40,6 @@ Issues = "https://github.com/mstute/sqlfp/issues"
 
 [tool.maturin]
 include = ["py.typed", "sqlfp.pyi"]
+
+[tool.mypy]
+strict = true
