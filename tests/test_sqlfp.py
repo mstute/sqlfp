@@ -1979,3 +1979,13 @@ def test_sqlfp_result_type():
 def test_sqlfp_version():
     assert isinstance(sqlfp.__version__, str)
     assert len(sqlfp.__version__) > 0
+
+
+def test_sqlfp_repr():
+    result = sqlfp.normalize("SELECT * FROM users WHERE id = 123")
+    r = repr(result)
+    assert r.startswith("NormalizeResult(hash='")
+    assert "normalized='" in r
+    # hash prefix: first 8 hex chars
+    hash_prefix = result.hash[:8]
+    assert hash_prefix in r
