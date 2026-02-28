@@ -19,7 +19,7 @@ license-files = ["LICENSE"]
 keywords = ["sql", "fingerprint", "hashing", "performance", "pyo3"]
 
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Rust",
@@ -39,4 +39,4 @@ Repository = "https://github.com/mstute/sqlfp"
 Issues = "https://github.com/mstute/sqlfp/issues"
 
 [tool.maturin]
-include = ["py.typed"]
+include = ["py.typed", "sqlfp.pyi"]
