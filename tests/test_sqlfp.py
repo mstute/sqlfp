@@ -1989,3 +1989,11 @@ def test_sqlfp_repr():
     # hash prefix: first 8 hex chars
     hash_prefix = result.hash[:8]
     assert hash_prefix in r
+
+
+def test_sqlfp_idempotent():
+    sql = "SELECT id, name FROM users WHERE status = 'active' ORDER BY id ASC"
+    first = sqlfp.normalize(sql)
+    second = sqlfp.normalize(first.normalized)
+    assert first.hash == second.hash
+    assert first.normalized == second.normalized
