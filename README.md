@@ -112,7 +112,7 @@ Results may vary depending on workload and hardware.
 ``` python
 normalize(
     sql: str,
-    dialect: str = "postgres",
+    dialect: str = "generic",
     placeholder: str = "?"
 ) -> NormalizeResult
 ```
@@ -204,7 +204,7 @@ Technologies used:
 
 ## Project Status
 
-SQLFP is currently in **alpha**.
+SQLFP is currently in **beta**.
 
 APIs may evolve before version 1.0.
 
