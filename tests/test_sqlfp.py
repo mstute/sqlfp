@@ -142,6 +142,47 @@ CASES = [
             'SELECT "User".id, "User".email FROM "User" WHERE "User".id = 123;',
         ],
     },
+    {
+        "name": "bitwise xor",
+        "dialects": DIALECTS,
+        "variants": [
+            'SELECT "User".id ^ "User".email FROM "User" WHERE "User".id = 1;',
+            'SELECT "User".id ^ "User".email FROM "User" WHERE "User".id = 123;',
+        ],
+    },
+    {
+        "name": "bitwise or",
+        "dialects": DIALECTS,
+        "variants": [
+            'SELECT "User".id | "User".email FROM "User" WHERE "User".id = 1;',
+            'SELECT "User".id | "User".email FROM "User" WHERE "User".id = 123;',
+        ],
+    },
+    {
+        "name": "bitwise and",
+        "dialects": DIALECTS,
+        "variants": [
+            'SELECT "User".id & "User".email FROM "User" WHERE "User".id = 1;',
+            'SELECT "User".id & "User".email FROM "User" WHERE "User".id = 123;',
+        ],
+    },
+    {
+        "name": "Postgresql bitwise shift left",
+        "dialects": "postgres",
+        "variants": [
+            "SELECT 3 << 2 AS result;",
+            "SELECT 230 << 12 AS result;",
+        ],
+    },
+    {
+        "name": "Postgresql bitwise shift right",
+        "dialects": "postgres",
+        "variants": [
+            "SELECT 3 >> 2 AS result;",
+            "SELECT 230 >> 12 AS result;",
+        ],
+    },
+
     # -------------------------
     # ORDER BY / LIMIT / OFFSET
     # -------------------------
@@ -225,6 +266,22 @@ CASES = [
         "variants": [
             "SELECT u.id, p.bio FROM users u LEFT JOIN profiles p ON p.user_id = u.id;",
             "SELECT u.id, p.bio FROM users u LEFT OUTER JOIN profiles p ON p.user_id = u.id;",
+        ],
+    },
+    {
+        "name": "right join",
+        "dialects": DIALECTS,
+        "variants": [
+            "SELECT u.id, p.bio FROM users u RIGHT JOIN profiles p ON p.user_id = u.id;",
+            "SELECT u.id, p.bio FROM users u RIGHT OUTER JOIN profiles p ON p.user_id = u.id;",
+        ],
+    },
+    {
+        "name": "nested join",
+        "dialects": DIALECTS,
+        "variants": [
+            "SELECT * FROM a JOIN (b JOIN c ON   b.id    = c.id) ON a.id = b.id;",
+            "SELECT * FROM a JOIN (b JOIN c   ON b.id = c.id) on a.id = b.id;",
         ],
     },
     {
@@ -446,8 +503,8 @@ CASES = [
         "name": "update set",
         "dialects": DIALECTS,
         "variants": [
-            "UPDATE users SET email = 'a@example.com' WHERE id = 1;",
-            "UPDATE users SET email = 'b@example.com' WHERE id = 2;",
+            "UPDATE users SET email = 'a@example.com' WHERE (id = 1 XOR id =2);",
+            "UPDATE users SET email = 'b@example.com' WHERE (id = 2 XOR id = 3);",
         ],
     },
     {
@@ -2004,3 +2061,41 @@ def test_sqlfp_multi_statement():
     result = sqlfp.normalize("SELECT 1; SELECT 2")
     assert result.normalized == "SELECT ?"
     assert result.params == ["1"]
+
+
+def test_sqlfp_repr_50():
+    query = """
+        SELECT
+            "auth_user"."id" AS "col1",
+            "auth_user"."password" AS "col2",
+            "auth_user"."last_login" AS "col3",
+            "auth_user"."is_superuser" AS "col4",
+            "auth_user"."username" AS "col5",
+            "auth_user"."first_name" AS "col6",
+            "auth_user"."last_name" AS "col7",
+            "auth_user"."email" AS "col8",
+            "auth_user"."is_staff" AS "col9",
+            "auth_user"."is_active" AS "col10",
+            "auth_user"."date_joined" AS "col11",
+            "profile_profile"."id" AS "col12",
+            "profile_profile"."user_id" AS "col13",
+            "profile_profile"."company" AS "col14",
+            "profile_profile"."job_title" AS "col15",
+            "profile_profile"."timezone" AS "col16",
+            "profile_profile"."created_at" AS "col17"
+        FROM "auth_user"
+        LEFT OUTER JOIN "profile_profile"
+            ON ("profile_profile"."user_id" = "auth_user"."id")
+        WHERE
+            ("auth_user"."is_active" = TRUE)
+            AND ("auth_user"."email" ILIKE '%@example.com')
+        ORDER BY "auth_user"."id" ASC
+        LIMIT 50 OFFSET 100;"""
+    result = sqlfp.normalize(query)
+    assert len(result.normalized) > 50
+    assert len(result.__repr__())
+
+
+def test_sqlfp_no_statment():
+    with pytest.raises(ValueError, match="No SQL statement found"):
+        sqlfp.normalize("")

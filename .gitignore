@@ -35,6 +35,9 @@ Thumbs.db
 # Env
 .env
 
-TODOs.md
+# coverage
+*.profraw
+cov-html/
+*.profdata
 
-.claude*
+TODOs.md
