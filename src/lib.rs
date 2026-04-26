@@ -12,6 +12,13 @@ use sha2::{Sha256, Digest};
 use core::ops::ControlFlow;
 
 
+/// Result of a SQL normalization and fingerprinting operation.
+///
+/// Attributes:
+///     normalized (str): The normalized SQL with literals replaced by the placeholder.
+///     hash (str): SHA-256 hex digest of the normalized SQL.
+///     original (str): The original SQL string as provided.
+///     params (list[str]): Extracted literal values, in order of appearance.
 #[pyclass(module = "sqlfp")]
 #[derive(Clone)]
 struct NormalizeResult {
@@ -339,6 +346,31 @@ fn compute_hash(normalized: &str) -> String {
     hex::encode(hasher.finalize())
 }
 
+/// Normalize a SQL statement and return its fingerprint.
+///
+/// Args:
+///     sql (str): The SQL statement to normalize.
+///     dialect (str): The SQL dialect to use for parsing. One of
+///         ``"generic"``, ``"ansi"``, ``"mysql"``, ``"mariadb"``,
+///         ``"postgresql"``, ``"postgres"``, ``"sqlite"``, ``"mssql"``,
+///         ``"oracle"``. Defaults to ``"generic"``.
+///     placeholder (str): The string used to replace literal values in the
+///         normalized output. Defaults to ``"?"``.
+///
+/// Returns:
+///     NormalizeResult: An object exposing ``normalized`` (str), ``hash``
+///     (str, SHA-256 hex), ``original`` (str), and ``params`` (list[str]).
+///
+/// Raises:
+///     ValueError: If the dialect is not supported or the SQL cannot be parsed.
+///
+/// Example:
+///     >>> import sqlfp
+///     >>> r = sqlfp.normalize("SELECT * FROM users WHERE id = 42", dialect="postgres")
+///     >>> r.normalized
+///     'SELECT * FROM users WHERE id = ?'
+///     >>> r.params
+///     ['42']
 #[pyfunction]
 #[pyo3(signature = (sql, dialect="generic", placeholder="?"))]
 fn normalize(sql: &str, dialect: &str, placeholder: &str) -> PyResult<NormalizeResult> {
