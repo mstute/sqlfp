@@ -29,7 +29,7 @@ crate-type = ["cdylib"]
 [dependencies]
 pyo3 = { version = "0.28", features = ["extension-module", "abi3-py38"] }
 sqlparser = { version = "0.61", features = ["visitor"] }
-sha2 = "0.10"
+sha2 = "0.11"
 hex = "0.4"
 
 [profile.release]
